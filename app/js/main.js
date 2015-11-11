@@ -52,12 +52,16 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var HomeController = function HomeController($scope) {
+var HomeController = function HomeController($scope, $location) {
 
   $scope.title = 'Share. Critique. Inspire.';
+
+  $scope.go = function (path) {
+    $location.path(path);
+  };
 };
 
-HomeController.$inject = ['$scope'];
+HomeController.$inject = ['$scope', '$location'];
 
 exports['default'] = HomeController;
 module.exports = exports['default'];
