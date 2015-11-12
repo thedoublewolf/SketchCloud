@@ -62,7 +62,7 @@ form {
   width: 300px;
   margin: 0 auto;
   textarea {
-    height: 250px;
+    height: 500px;
   }
 }
 
@@ -75,5 +75,13 @@ form {
 }
 
 .post {
-  width: 400px;
+  width: 500px;
+  text-align: left;
+}
+
+.posts {
+  border: 1px solid red;
+  width: 600px;
+  padding: 0;
+  margin: 0 auto;
 }

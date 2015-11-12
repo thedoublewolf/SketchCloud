@@ -1,9 +1,11 @@
 <h3>Explore Posts</h3>
 
-<ul>
+<ul class="posts">
   <li class="post" ng-repeat="post in posts">
-    <p><a href="#/single/{{ post.objectId }}">{{ post.title }}</a></p>
-     <img class="postimage" src="{{ post.image }}"> 
+     <a href="#/single/{{ post.objectId }}">
+        <img class="postimage" src="{{ post.image }}"> 
+        <h5>{{ post.title }}</h5>
+    </a>
      <p class="postdesc">{{ post.description }}</p>
   </li>
 </ul>

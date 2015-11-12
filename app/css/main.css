@@ -6437,12 +6437,19 @@ form {
   width: 300px;
   margin: 0 auto; }
   form textarea {
-    height: 250px; }
+    height: 500px; }
 
 .postimage {
   width: 200px; }
 
 .post {
-  width: 400px; }
+  width: 500px;
+  text-align: left; }
+
+.posts {
+  border: 1px solid red;
+  width: 600px;
+  padding: 0;
+  margin: 0 auto; }
 
 /*# sourceMappingURL=main.css.map */
