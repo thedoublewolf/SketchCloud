@@ -1,0 +1,9 @@
+<h3>New Idea</h3>
+<p>Tell us what you're working on.  We're here to help!</p>
+
+<form ng-submit="addPost(post)">
+  <input placeholder="(Working) Title" ng-model="post.title">
+  <input placeholder="Image URL" ng-model="post.image">
+  <textarea placeholder="Description" ng-model="post.description"></textarea>
+  <button class="button">Submit</button>
+</form>

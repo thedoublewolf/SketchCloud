@@ -22,6 +22,11 @@ let config = function($stateProvider, $urlRouterProvider) {
       controller: 'SignInController',
       templateUrl: 'templates/signin.tpl.html'
     })
+    .state('root.logout', {
+      url: '/logout',
+      controller: 'SignInController',
+      templateUrl: 'templates/logout.tpl.html'
+    })
     .state('root.register', {
       url: '/register',
       controller: 'RegisterController',

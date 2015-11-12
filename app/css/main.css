@@ -6392,7 +6392,7 @@ body {
   position: relative; }
 
 .container {
-  width: 100%;
+  max-width: 100%;
   margin: 0px auto;
   text-align: center; }
 
@@ -6414,7 +6414,7 @@ body {
   left: 50%;
   margin-left: -200px; }
 
-.explore-button {
+.button {
   border: none;
   width: 150px;
   margin-top: 10px;
@@ -6423,11 +6423,17 @@ body {
   outline: none;
   box-shadow: 0px 5px #b85200; }
 
-.explore-button:hover {
+.button:hover {
   background-color: #ff831f; }
 
-.explore-button:active {
+.button:active {
   margin-top: 15px;
   box-shadow: 0px 0px 0px #EB6900; }
+
+form {
+  width: 300px;
+  margin: 0 auto; }
+  form textarea {
+    height: 250px; }
 
 /*# sourceMappingURL=main.css.map */

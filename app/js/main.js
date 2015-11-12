@@ -23,6 +23,10 @@ var config = function config($stateProvider, $urlRouterProvider) {
     url: '/signin',
     controller: 'SignInController',
     templateUrl: 'templates/signin.tpl.html'
+  }).state('root.logout', {
+    url: '/logout',
+    controller: 'SignInController',
+    templateUrl: 'templates/logout.tpl.html'
   }).state('root.register', {
     url: '/register',
     controller: 'RegisterController',
@@ -67,18 +71,157 @@ exports['default'] = HomeController;
 module.exports = exports['default'];
 
 },{}],4:[function(require,module,exports){
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var LogOutController = function LogOutController($scope, $http, $location, PARSE, $rootScope) {
+
+  $rootScope.currentUser = PARSE.User.current();
+
+  $scope.logout = function () {
+    $rootScope.currentUser = null;
+    PARSE.User.logOut();
+  };
+};
+
+LogOutController.$inject = ['$scope', '$http', '$location', 'PARSE', '$rootScope'];
+
+exports['default'] = LogOutController;
+module.exports = exports['default'];
 
 },{}],5:[function(require,module,exports){
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var RegisterController = function RegisterController($scope, $http, PARSE, $rootScope, $location) {
+
+  var url = PARSE.URL + 'users';
+
+  var User = function User(form) {
+    this.fullname = form.fullname;
+    this.username = form.username;
+    this.email = form.email;
+    this.password = form.password;
+  };
+
+  $scope.register = function (form) {
+    var u = new User(form);
+    $http.post(url, u, PARSE.CONFIG).then(function (res) {
+      $scope.user = {};
+      $location.path('/user');
+    });
+  };
+};
+
+RegisterController.$inject = ['$scope', '$http', 'PARSE', '$rootScope', '$location'];
+
+exports['default'] = RegisterController;
+module.exports = exports['default'];
 
 },{}],6:[function(require,module,exports){
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var SignInController = function SignInController($scope, $http, $location, PARSE, $rootScope) {
+
+  var url = PARSE.URL + 'login';
+
+  var Login = function Login(form) {
+    this.username = form.username;
+    this.password = form.password;
+  };
+
+  $rootScope.loggedIn = function () {
+    if ($rootScope.currentUser === null) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  $scope.logout = function () {
+    $rootScope.currentUser = null;
+    PARSE.User.logOut();
+  };
+
+  // if ($rootScope.loggedIn() === true) {
+  //   $location.path('/user');
+  // }
+
+  function loginSuccessful(user) {
+    $rootScope.$apply(function () {
+      $rootScope.currentUser = PARSE.User.Current(user);
+      $location.path('/user');
+    });
+  }
+
+  function loginUnsuccessful(user, error) {
+    alert('Try Again');
+  }
+
+  $scope.loginUser = function (form) {
+    var l = new Login(form);
+    PARSE.User.loginUser(form.l, {
+      success: loginSuccessful,
+      error: loginUnsuccessful
+    });
+  };
+};
+
+SignInController.$inject = ['$scope', '$http', '$location', 'PARSE', '$rootScope'];
+
+exports['default'] = SignInController;
+module.exports = exports['default'];
 
 },{}],7:[function(require,module,exports){
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var UploadController = function UploadController($scope, $http, PARSE) {
+
+  var url = PARSE.URL + 'classes/post';
+
+  var Post = function Post(obj) {
+    this.title = obj.title;
+    this.image = obj.image;
+    this.description = obj.description;
+  };
+
+  $scope.addPost = function (obj) {
+    var p = new Post(obj);
+    $http.post(url, p, PARSE.CONFIG).then(function (res) {
+      $scope.post = {};
+    });
+  };
+};
+
+UploadController.$inject = ['$scope', '$http', 'PARSE'];
+
+exports['default'] = UploadController;
+module.exports = exports['default'];
 
 },{}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var UserController = function UserController($scope, $http, $location, PARSE, $rootScope) {};
+
+UserController.$inject = ['$scope', '$http', '$location', 'PARSE', '$rootScope'];
+
+exports['default'] = UserController;
+module.exports = exports['default'];
+
+},{}],9:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -117,9 +260,21 @@ var _controllersUserController = require('./controllers/user.controller');
 
 var _controllersUserController2 = _interopRequireDefault(_controllersUserController);
 
-_angular2['default'].module('app', ['ui.router']).config(_config2['default']).controller('HomeController', _controllersHomeController2['default']).controller('ExploreController', _controllersExploreController2['default']).controller('RegisterController', _controllersRegisterController2['default']).controller('SignInController', _controllersSignInController2['default']).controller('UploadController', _controllersUploadController2['default']).controller('UserController', _controllersUserController2['default']);
+var _controllersLogoutController = require('./controllers/logout.controller');
 
-},{"./config":1,"./controllers/explore.controller":2,"./controllers/home.controller":3,"./controllers/register.controller":4,"./controllers/signIn.controller":5,"./controllers/upload.controller":6,"./controllers/user.controller":7,"angular":11,"angular-ui-router":9}],9:[function(require,module,exports){
+var _controllersLogoutController2 = _interopRequireDefault(_controllersLogoutController);
+
+_angular2['default'].module('app', ['ui.router']).constant('PARSE', {
+  URL: 'https://api.parse.com/1/',
+  CONFIG: {
+    headers: {
+      'X-Parse-Application-Id': 'mdglKarlt2mNMLydQkIsP6cDMJMQiszcRUrxLqkd',
+      'X-Parse-REST-API-Key': 'tRuPjdevHeUJT6biDyeadniIR4L8SHp5RAuYwJJy'
+    }
+  }
+}).config(_config2['default']).controller('HomeController', _controllersHomeController2['default']).controller('ExploreController', _controllersExploreController2['default']).controller('RegisterController', _controllersRegisterController2['default']).controller('SignInController', _controllersSignInController2['default']).controller('UploadController', _controllersUploadController2['default']).controller('UserController', _controllersUserController2['default']).controller('LogOutController', _controllersLogoutController2['default']);
+
+},{"./config":1,"./controllers/explore.controller":2,"./controllers/home.controller":3,"./controllers/logout.controller":4,"./controllers/register.controller":5,"./controllers/signIn.controller":6,"./controllers/upload.controller":7,"./controllers/user.controller":8,"angular":12,"angular-ui-router":10}],10:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4490,7 +4645,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33395,11 +33550,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":10}]},{},[8])
+},{"./angular":11}]},{},[9])
 
 
 //# sourceMappingURL=main.js.map
