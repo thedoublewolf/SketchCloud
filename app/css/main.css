@@ -6387,6 +6387,9 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
+li {
+  list-style: none; }
+
 body {
   background: #e2ebf3;
   position: relative; }
@@ -6435,5 +6438,11 @@ form {
   margin: 0 auto; }
   form textarea {
     height: 250px; }
+
+.postimage {
+  width: 200px; }
+
+.post {
+  width: 400px; }
 
 /*# sourceMappingURL=main.css.map */

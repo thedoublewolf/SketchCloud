@@ -1,4 +1,4 @@
-let UploadController = function($scope, $http, PARSE) {
+let UploadController = function($scope, $http, PARSE, $location) {
   
   let url = PARSE.URL + 'classes/post';
 
@@ -12,11 +12,12 @@ let UploadController = function($scope, $http, PARSE) {
     let p = new Post(obj);
     $http.post(url, p, PARSE.CONFIG).then( (res) => {
       $scope.post = {};
+      $location.path = ('/explore');
     });
   };
 
 };
 
-UploadController.$inject = ['$scope', '$http', 'PARSE'];
+UploadController.$inject = ['$scope', '$http', 'PARSE', '$location'];
 
 export default UploadController;

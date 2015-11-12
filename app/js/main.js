@@ -48,7 +48,24 @@ exports['default'] = config;
 module.exports = exports['default'];
 
 },{}],2:[function(require,module,exports){
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var ExploreController = function ExploreController($scope, $http, PARSE) {
+
+  var url = PARSE.URL + 'classes/post';
+
+  $http.get(url, PARSE.CONFIG).then(function (res) {
+    $scope.posts = res.data.results;
+  });
+};
+
+ExploreController.$inject = ['$scope', '$http', 'PARSE'];
+
+exports['default'] = ExploreController;
+module.exports = exports['default'];
 
 },{}],3:[function(require,module,exports){
 'use strict';
@@ -185,7 +202,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var UploadController = function UploadController($scope, $http, PARSE) {
+var UploadController = function UploadController($scope, $http, PARSE, $location) {
 
   var url = PARSE.URL + 'classes/post';
 
@@ -199,11 +216,12 @@ var UploadController = function UploadController($scope, $http, PARSE) {
     var p = new Post(obj);
     $http.post(url, p, PARSE.CONFIG).then(function (res) {
       $scope.post = {};
+      $location.path = '/explore';
     });
   };
 };
 
-UploadController.$inject = ['$scope', '$http', 'PARSE'];
+UploadController.$inject = ['$scope', '$http', 'PARSE', '$location'];
 
 exports['default'] = UploadController;
 module.exports = exports['default'];

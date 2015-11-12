@@ -6,6 +6,10 @@
 
 }
 
+li {
+  list-style: none;
+}
+
 body {
   background: #e2ebf3;
   position: relative;
@@ -60,4 +64,16 @@ form {
   textarea {
     height: 250px;
   }
+}
+
+.postimage {
+  width: 200px;
+}
+
+.postdesc {
+
+}
+
+.post {
+  width: 400px;
 }
