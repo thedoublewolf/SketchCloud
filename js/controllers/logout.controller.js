@@ -1,4 +1,4 @@
-let LogOutController = function($scope, $http, $location, PARSE, $rootScope) {
+let LogOutController = function($scope, $http, $state, PARSE, $rootScope) {
   
   $rootScope.currentUser = PARSE.User.current();
 
@@ -9,6 +9,6 @@ let LogOutController = function($scope, $http, $location, PARSE, $rootScope) {
 
 };
 
-LogOutController.$inject = ['$scope', '$http', '$location', 'PARSE', '$rootScope'];
+LogOutController.$inject = ['$scope', '$http', '$state', 'PARSE', '$rootScope'];
 
 export default LogOutController;

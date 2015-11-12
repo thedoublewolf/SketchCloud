@@ -1,4 +1,4 @@
-let RegisterController = function($scope, $http, PARSE, $rootScope, $location) {
+let RegisterController = function($scope, $http, PARSE, $rootScope, $state) {
   
   let url = PARSE.URL + 'users';
 
@@ -13,12 +13,12 @@ let RegisterController = function($scope, $http, PARSE, $rootScope, $location) {
     let u = new User(form);
     $http.post(url, u, PARSE.CONFIG).then( (res) => {
       $scope.user = {};
-      $location.path('/user');
+      $state.go('/user');
     });
   };
 
 };
 
-RegisterController.$inject = ['$scope', '$http', 'PARSE', '$rootScope', '$location'];
+RegisterController.$inject = ['$scope', '$http', 'PARSE', '$rootScope', '$state'];
 
 export default RegisterController;

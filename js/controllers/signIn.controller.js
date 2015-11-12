@@ -1,4 +1,4 @@
-let SignInController = function($scope, $http, $location, PARSE, $rootScope) {
+let SignInController = function($scope, $http, $state, PARSE, $rootScope) {
   
   let url = PARSE.URL + 'login';
 
@@ -27,7 +27,7 @@ let SignInController = function($scope, $http, $location, PARSE, $rootScope) {
   function loginSuccessful(user) {
     $rootScope.$apply(function() {
       $rootScope.currentUser = PARSE.User.Current(user);
-      $location.path('/user');
+      $state.go('root.user');
     });
   }
 
@@ -45,6 +45,6 @@ let SignInController = function($scope, $http, $location, PARSE, $rootScope) {
 
 };
 
-SignInController.$inject = ['$scope', '$http', '$location', 'PARSE', '$rootScope'];
+SignInController.$inject = ['$scope', '$http', '$state', 'PARSE', '$rootScope'];
 
 export default SignInController;

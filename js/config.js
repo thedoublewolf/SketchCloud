@@ -17,6 +17,11 @@ let config = function($stateProvider, $urlRouterProvider) {
       controller: 'ExploreController',
       templateUrl: 'templates/explore.tpl.html'
     })
+    .state('root.single', {
+      url: '/single/:postId',
+      controller: 'SingleController',
+      templateUrl: 'templates/single.tpl.html'
+    })
     .state('root.signin', {
       url: '/signin',
       controller: 'SignInController',
@@ -36,6 +41,11 @@ let config = function($stateProvider, $urlRouterProvider) {
       url: '/upload',
       controller: 'UploadController',
       templateUrl: 'templates/upload.tpl.html'
+    })
+    .state('root.edit', {
+      url: '/edit/:postId',
+      controller: 'EditController',
+      templateUrl: 'templates/edit.tpl.html'
     })
     .state('root.user', {
       url: '/user',

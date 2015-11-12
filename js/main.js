@@ -10,6 +10,10 @@ import SignInController from './controllers/signIn.controller';
 import UploadController from './controllers/upload.controller';
 import UserController from './controllers/user.controller';
 import LogOutController from './controllers/logout.controller';
+import SingleController from './controllers/single.controller';
+import EditController from './controllers/edit.controller';
+
+import PostService from './services/post.service';
 
 angular
   .module('app', ['ui.router'])
@@ -30,4 +34,7 @@ angular
   .controller('UploadController', UploadController)
   .controller('UserController', UserController)
   .controller('LogOutController', LogOutController)
+  .controller('SingleController', SingleController)
+  .controller('EditController', EditController)
+  .service('PostService', PostService)
 ;

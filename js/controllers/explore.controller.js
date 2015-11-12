@@ -1,13 +1,11 @@
-let ExploreController = function($scope, $http, PARSE) {
+let ExploreController = function($scope, PostService) {
   
-  let url = PARSE.URL + 'classes/post';
-
-  $http.get(url, PARSE.CONFIG).then( (res) => {
+  PostService.getPosts().then( (res) => {
     $scope.posts = res.data.results;
   });
 
 };
 
-ExploreController.$inject = ['$scope', '$http', 'PARSE'];
+ExploreController.$inject = ['$scope', 'PostService'];
 
 export default ExploreController;

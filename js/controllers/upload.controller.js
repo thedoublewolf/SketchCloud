@@ -1,23 +1,14 @@
-let UploadController = function($scope, $http, PARSE, $location) {
-  
-  let url = PARSE.URL + 'classes/post';
+let UploadController = function($scope, $state, PostService) {
 
-  let Post = function (obj) {
-    this.title = obj.title;
-    this.image = obj.image;
-    this.description = obj.description;
-  };
-
-  $scope.addPost = function (obj) {
-    let p = new Post(obj);
-    $http.post(url, p, PARSE.CONFIG).then( (res) => {
+  $scope.addPost = (obj) => {
+    PostService.addPost(obj).then( (res) => {
       $scope.post = {};
-      $location.path = ('/explore');
     });
+    $state.go('root.explore');
   };
 
 };
 
-UploadController.$inject = ['$scope', '$http', 'PARSE', '$location'];
+UploadController.$inject = ['$scope', '$state', 'PostService'];
 
 export default UploadController;

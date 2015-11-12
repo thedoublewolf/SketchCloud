@@ -1,9 +1,9 @@
-let UserController = function($scope, $http, $location, PARSE, $rootScope) {
+let UserController = function($scope, $http, $state, PARSE, $rootScope) {
   
   
 
 };
 
-UserController.$inject = ['$scope', '$http', '$location', 'PARSE', '$rootScope'];
+UserController.$inject = ['$scope', '$http', '$state', 'PARSE', '$rootScope'];
 
 export default UserController;

@@ -1,0 +1,9 @@
+<h3>{{ singlePost.title }}</h3>
+
+ <img class="postimage" src="{{ singlePost.image }}"> 
+ <p class="postdesc">{{ singlePost.description }}</p>
+
+ <hr>
+
+ <a href="#/edit/{{ singlePost.objectId }}">Edit Post</a> |
+<a href="#" ng-click="deleteMe(singlePost)">Delete Post</a>

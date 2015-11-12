@@ -1,0 +1,11 @@
+<h2>Edit Post</h2>
+
+<form ng-submit="updatePost(post)">
+  <label>Title:
+  <input ng-model="singlePost.title"></label>
+  <label>Image Url:
+  <input ng-model="singlePost.image"></label>
+  <label>Description:
+  <textarea ng-model="singlePost.description"></textarea></label>
+  <button class="button">Update</button>
+</form>

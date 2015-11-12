@@ -19,6 +19,10 @@ var config = function config($stateProvider, $urlRouterProvider) {
     url: '/explore',
     controller: 'ExploreController',
     templateUrl: 'templates/explore.tpl.html'
+  }).state('root.single', {
+    url: '/single/:postId',
+    controller: 'SingleController',
+    templateUrl: 'templates/single.tpl.html'
   }).state('root.signin', {
     url: '/signin',
     controller: 'SignInController',
@@ -35,6 +39,10 @@ var config = function config($stateProvider, $urlRouterProvider) {
     url: '/upload',
     controller: 'UploadController',
     templateUrl: 'templates/upload.tpl.html'
+  }).state('root.edit', {
+    url: '/edit/:postId',
+    controller: 'EditController',
+    templateUrl: 'templates/edit.tpl.html'
   }).state('root.user', {
     url: '/user',
     controller: 'UserController',
@@ -53,18 +61,20 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var ExploreController = function ExploreController($scope, $http, PARSE) {
+var EditController = function EditController($scope, $stateParams, PostService) {
 
-  var url = PARSE.URL + 'classes/post';
-
-  $http.get(url, PARSE.CONFIG).then(function (res) {
-    $scope.posts = res.data.results;
+  PostService.getPost($stateParams.postId).then(function (res) {
+    $scope.singlePost = res.data;
   });
+
+  $scope.updatePost = function (obj) {
+    PostService.update(obj).then(function (res) {});
+  };
 };
 
-ExploreController.$inject = ['$scope', '$http', 'PARSE'];
+EditController.$inject = ['$scope', '$stateParams', 'PostService'];
 
-exports['default'] = ExploreController;
+exports['default'] = EditController;
 module.exports = exports['default'];
 
 },{}],3:[function(require,module,exports){
@@ -73,18 +83,16 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var HomeController = function HomeController($scope, $location) {
+var ExploreController = function ExploreController($scope, PostService) {
 
-  $scope.title = 'Share. Critique. Inspire.';
-
-  $scope.go = function (path) {
-    $location.path(path);
-  };
+  PostService.getPosts().then(function (res) {
+    $scope.posts = res.data.results;
+  });
 };
 
-HomeController.$inject = ['$scope', '$location'];
+ExploreController.$inject = ['$scope', 'PostService'];
 
-exports['default'] = HomeController;
+exports['default'] = ExploreController;
 module.exports = exports['default'];
 
 },{}],4:[function(require,module,exports){
@@ -93,7 +101,27 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var LogOutController = function LogOutController($scope, $http, $location, PARSE, $rootScope) {
+var HomeController = function HomeController($scope, $state) {
+
+  $scope.title = 'Share. Critique. Inspire.';
+
+  $scope.go = function (path) {
+    $state.go(path);
+  };
+};
+
+HomeController.$inject = ['$scope', '$state'];
+
+exports['default'] = HomeController;
+module.exports = exports['default'];
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var LogOutController = function LogOutController($scope, $http, $state, PARSE, $rootScope) {
 
   $rootScope.currentUser = PARSE.User.current();
 
@@ -103,18 +131,18 @@ var LogOutController = function LogOutController($scope, $http, $location, PARSE
   };
 };
 
-LogOutController.$inject = ['$scope', '$http', '$location', 'PARSE', '$rootScope'];
+LogOutController.$inject = ['$scope', '$http', '$state', 'PARSE', '$rootScope'];
 
 exports['default'] = LogOutController;
 module.exports = exports['default'];
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var RegisterController = function RegisterController($scope, $http, PARSE, $rootScope, $location) {
+var RegisterController = function RegisterController($scope, $http, PARSE, $rootScope, $state) {
 
   var url = PARSE.URL + 'users';
 
@@ -129,23 +157,23 @@ var RegisterController = function RegisterController($scope, $http, PARSE, $root
     var u = new User(form);
     $http.post(url, u, PARSE.CONFIG).then(function (res) {
       $scope.user = {};
-      $location.path('/user');
+      $state.go('/user');
     });
   };
 };
 
-RegisterController.$inject = ['$scope', '$http', 'PARSE', '$rootScope', '$location'];
+RegisterController.$inject = ['$scope', '$http', 'PARSE', '$rootScope', '$state'];
 
 exports['default'] = RegisterController;
 module.exports = exports['default'];
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var SignInController = function SignInController($scope, $http, $location, PARSE, $rootScope) {
+var SignInController = function SignInController($scope, $http, $state, PARSE, $rootScope) {
 
   var url = PARSE.URL + 'login';
 
@@ -174,7 +202,7 @@ var SignInController = function SignInController($scope, $http, $location, PARSE
   function loginSuccessful(user) {
     $rootScope.$apply(function () {
       $rootScope.currentUser = PARSE.User.Current(user);
-      $location.path('/user');
+      $state.go('root.user');
     });
   }
 
@@ -191,39 +219,9 @@ var SignInController = function SignInController($scope, $http, $location, PARSE
   };
 };
 
-SignInController.$inject = ['$scope', '$http', '$location', 'PARSE', '$rootScope'];
+SignInController.$inject = ['$scope', '$http', '$state', 'PARSE', '$rootScope'];
 
 exports['default'] = SignInController;
-module.exports = exports['default'];
-
-},{}],7:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-var UploadController = function UploadController($scope, $http, PARSE, $location) {
-
-  var url = PARSE.URL + 'classes/post';
-
-  var Post = function Post(obj) {
-    this.title = obj.title;
-    this.image = obj.image;
-    this.description = obj.description;
-  };
-
-  $scope.addPost = function (obj) {
-    var p = new Post(obj);
-    $http.post(url, p, PARSE.CONFIG).then(function (res) {
-      $scope.post = {};
-      $location.path = '/explore';
-    });
-  };
-};
-
-UploadController.$inject = ['$scope', '$http', 'PARSE', '$location'];
-
-exports['default'] = UploadController;
 module.exports = exports['default'];
 
 },{}],8:[function(require,module,exports){
@@ -232,14 +230,59 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var UserController = function UserController($scope, $http, $location, PARSE, $rootScope) {};
+var SingleController = function SingleController($scope, $state, $stateParams, PostService) {
 
-UserController.$inject = ['$scope', '$http', '$location', 'PARSE', '$rootScope'];
+  PostService.getPost($stateParams.postId).then(function (res) {
+    $scope.singlePost = res.data;
+  });
+
+  $scope.deleteMe = function (obj) {
+    PostService['delete'](obj).then(function (res) {
+      $state.go('root.explore');
+    });
+  };
+};
+
+SingleController.$inject = ['$scope', '$state', '$stateParams', 'PostService'];
+
+exports['default'] = SingleController;
+module.exports = exports['default'];
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var UploadController = function UploadController($scope, $state, PostService) {
+
+  $scope.addPost = function (obj) {
+    PostService.addPost(obj).then(function (res) {
+      $scope.post = {};
+    });
+    $state.go('root.explore');
+  };
+};
+
+UploadController.$inject = ['$scope', '$state', 'PostService'];
+
+exports['default'] = UploadController;
+module.exports = exports['default'];
+
+},{}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var UserController = function UserController($scope, $http, $state, PARSE, $rootScope) {};
+
+UserController.$inject = ['$scope', '$http', '$state', 'PARSE', '$rootScope'];
 
 exports['default'] = UserController;
 module.exports = exports['default'];
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -282,6 +325,18 @@ var _controllersLogoutController = require('./controllers/logout.controller');
 
 var _controllersLogoutController2 = _interopRequireDefault(_controllersLogoutController);
 
+var _controllersSingleController = require('./controllers/single.controller');
+
+var _controllersSingleController2 = _interopRequireDefault(_controllersSingleController);
+
+var _controllersEditController = require('./controllers/edit.controller');
+
+var _controllersEditController2 = _interopRequireDefault(_controllersEditController);
+
+var _servicesPostService = require('./services/post.service');
+
+var _servicesPostService2 = _interopRequireDefault(_servicesPostService);
+
 _angular2['default'].module('app', ['ui.router']).constant('PARSE', {
   URL: 'https://api.parse.com/1/',
   CONFIG: {
@@ -290,9 +345,62 @@ _angular2['default'].module('app', ['ui.router']).constant('PARSE', {
       'X-Parse-REST-API-Key': 'tRuPjdevHeUJT6biDyeadniIR4L8SHp5RAuYwJJy'
     }
   }
-}).config(_config2['default']).controller('HomeController', _controllersHomeController2['default']).controller('ExploreController', _controllersExploreController2['default']).controller('RegisterController', _controllersRegisterController2['default']).controller('SignInController', _controllersSignInController2['default']).controller('UploadController', _controllersUploadController2['default']).controller('UserController', _controllersUserController2['default']).controller('LogOutController', _controllersLogoutController2['default']);
+}).config(_config2['default']).controller('HomeController', _controllersHomeController2['default']).controller('ExploreController', _controllersExploreController2['default']).controller('RegisterController', _controllersRegisterController2['default']).controller('SignInController', _controllersSignInController2['default']).controller('UploadController', _controllersUploadController2['default']).controller('UserController', _controllersUserController2['default']).controller('LogOutController', _controllersLogoutController2['default']).controller('SingleController', _controllersSingleController2['default']).controller('EditController', _controllersEditController2['default']).service('PostService', _servicesPostService2['default']);
 
-},{"./config":1,"./controllers/explore.controller":2,"./controllers/home.controller":3,"./controllers/logout.controller":4,"./controllers/register.controller":5,"./controllers/signIn.controller":6,"./controllers/upload.controller":7,"./controllers/user.controller":8,"angular":12,"angular-ui-router":10}],10:[function(require,module,exports){
+},{"./config":1,"./controllers/edit.controller":2,"./controllers/explore.controller":3,"./controllers/home.controller":4,"./controllers/logout.controller":5,"./controllers/register.controller":6,"./controllers/signIn.controller":7,"./controllers/single.controller":8,"./controllers/upload.controller":9,"./controllers/user.controller":10,"./services/post.service":12,"angular":15,"angular-ui-router":13}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var PostService = function PostService($http, PARSE) {
+
+  var url = PARSE.URL + 'classes/post';
+
+  this.getPosts = function () {
+    return $http({
+      url: url,
+      headers: PARSE.CONFIG.headers,
+      method: 'GET',
+      cache: true
+    });
+  };
+
+  this.getPost = function (postId) {
+    return $http({
+      method: 'GET',
+      url: url + '/' + postId,
+      headers: PARSE.CONFIG.headers,
+      cache: true
+    });
+  };
+
+  var Post = function Post(obj) {
+    this.title = obj.title;
+    this.image = obj.image;
+    this.description = obj.description;
+  };
+
+  this.addPost = function (obj) {
+    var p = new Post(obj);
+    return $http.post(url, p, PARSE.CONFIG);
+  };
+
+  this.update = function (obj) {
+    return $http['delete'](url + '/' + obj.objectId, obj, PARSE.CONFIG);
+  };
+
+  this['delete'] = function (obj) {
+    return $http['delete'](url + '/' + obj.objectId, PARSE.CONFIG);
+  };
+};
+
+PostService.$inject = ['$http', 'PARSE'];
+
+exports['default'] = PostService;
+module.exports = exports['default'];
+
+},{}],13:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4663,7 +4771,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],11:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33568,11 +33676,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],12:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":11}]},{},[9])
+},{"./angular":14}]},{},[11])
 
 
 //# sourceMappingURL=main.js.map
