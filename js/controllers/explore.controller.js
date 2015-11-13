@@ -6,10 +6,10 @@ let ExploreController = function($scope, PostService) {
   PostService.getPosts().then( (res) => {
     $scope.posts = res.data.results;
     console.log(res);
-    _.each(res, function() {
-      $scope.date = moment(res.data.results.createdAt).format('MMM Do YY');
-      console.log(res.data.results.createdAt);
-    });
+    // _.each(res, function() {
+    //   $scope.date = moment(res.data.results.createdAt).format('MMM Do YY');
+    //   console.log(res.data.results.createdAt);
+    // });
   });
 
 };

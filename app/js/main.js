@@ -99,10 +99,10 @@ var ExploreController = function ExploreController($scope, PostService) {
   PostService.getPosts().then(function (res) {
     $scope.posts = res.data.results;
     console.log(res);
-    _underscore2['default'].each(res, function () {
-      $scope.date = (0, _moment2['default'])(res.data.results.createdAt).format('MMM Do YY');
-      console.log(res.data.results.createdAt);
-    });
+    // _.each(res, function() {
+    //   $scope.date = moment(res.data.results.createdAt).format('MMM Do YY');
+    //   console.log(res.data.results.createdAt);
+    // });
   });
 };
 
