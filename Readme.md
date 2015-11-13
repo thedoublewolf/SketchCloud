@@ -1,21 +1,25 @@
-# SketchCloud - mockup
+## SketchCloud - mockup
 
 > A web app for artists to share and critique ideas.
 
-## User abilities
+### Live page
+
+> http://sketchcloud.surge.sh
+
+### User abilities
 
 - Register for an account
 - Post, edit, and delete ideas
 - Rate posts
 
-## User abilities coming soon
+### User abilities coming soon
 
 - Log In/Out
 - User view with unique posts
 - Comments
 - User avatars
 
-## Tools and Assets
+### Tools and Assets
 
 - AngularJS
 - Angular Foundation for post rating system
@@ -24,7 +28,7 @@
 - ui.router to navigate through app
 - Parse REST API for storing/managing data
 
-## Usage
+### Usage
 
 - Clone this repo
 - Run `npm install` to install all necessary dependencies
