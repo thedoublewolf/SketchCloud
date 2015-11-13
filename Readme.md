@@ -1,46 +1,31 @@
-## Welcome to My Project
+# SketchCloud - mockup
 
-> I am your Readme.md file, you should probably update me.
+> A web app for artists to share and critique ideas.
 
+## User abilities
+
+- Register for an account
+- Post, edit, and delete ideas
+- Rate posts
+
+## User abilities coming soon
+
+- Log In/Out
+- User view with unique posts
+- Comments
+- User avatars
+
+## Tools and Assets
+
+- AngularJS
+- Angular Foundation for post rating system
+- Moment.js for converting Parse "createdAt" key.
+- Foundation 5 for layout mockup
+- ui.router to navigate through app
+- Parse REST API for storing/managing data
 
 ## Usage
 
 - Clone this repo
 - Run `npm install` to install all necessary dependencies
 - Run `gulp start` to start the server and a handful of other tasks
-
-
-## Assets Installed By Default
-
-- [Normalize CSS](https://necolas.github.io/normalize.css/)
-
-## Assets Setup and ready for use
-
-- [Bourbon](http://bourbon.io/)
-- [Neat](http://neat.bourbon.io/)
-- [Font Awesome](https://fortawesome.github.io/Font-Awesome/)
-- [Foundation 5](http://foundation.zurb.com/)
-
-#### How to use them?
-
-At the top of your `main.scss` file, just import any of the following:
-
-```scss
-@import "bourbon";
-@import "neat";
-
-@import "foundation";
-
-@import "font-awesome";
-```
-
-> Note: You probably don't want to use BOTH Bourbon/Neat & Foundation. Just pick one.
-
-## NPM Tools Used
-
-- [Babel](https://babeljs.io/)
-- [Browserify](http://browserify.org/)
-- [JavaScript Code Style](http://jscs.info/)
-- [SASS](http://sass-lang.com/)
-- [Mocha](https://mochajs.org/)
-- [Chai](http://chaijs.com/)

@@ -1,9 +1,25 @@
-<h3>{{ singlePost.title }}</h3>
+<div class="singleuser">
+  <img class="singleuserimage" src="http://placehold.it/100x100">
+  <hr class="userhr">
+  <a class="editpost" href="#/edit/{{ singlePost.objectId }}">Edit Post</a>
+  <a class="deletepost" href="#" ng-click="deleteMe(singlePost)">Delete Post</a>
+</div>
 
- <img class="postimage" src="{{ singlePost.image }}"> 
- <p class="postdesc">{{ singlePost.description }}</p>
+<div class="singlepost">
+  <h3>{{ singlePost.title }}</h3>
+  <p>Date Posted: {{ date }}</p>
 
- <hr>
+   <p class="postdesc">{{ singlePost.description }}</p>
 
- <a href="#/edit/{{ singlePost.objectId }}">Edit Post</a> |
-<a href="#" ng-click="deleteMe(singlePost)">Delete Post</a>
+   <img class="singlepostimage" src="{{ singlePost.image }}"> 
+
+   <hr>
+    <p>Rate this post:</p>
+    <rating value="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null" ng-click="rateMe(singlePost)"></rating>
+    <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
+
+    <hr>
+    <p>Comment:</p>
+    <textarea class="comment"></textarea>
+
+</div>

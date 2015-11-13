@@ -1,6 +1,7 @@
 // Put any @imports here
 // See Readme for a list of supported ones
 @import "foundation";
+@import "font-awesome";
 
 .top-bar-section {
 
@@ -11,7 +12,7 @@ li {
 }
 
 body {
-  background: #e2ebf3;
+  background: #F5F8FA;
   position: relative;
 }
 
@@ -62,26 +63,103 @@ form {
   width: 300px;
   margin: 0 auto;
   textarea {
-    height: 500px;
+    height: 300px;
   }
 }
 
+.user {
+  border: 1px solid #E2E8EE;
+  width: 100px;
+  height: 100px;
+  vertical-align: top;
+  margin-top: 8px;
+  border-radius: 5px;
+  display: inline-block;
+  text-align: center;
+}
+
+.singleuser {
+  border: 1px solid #E2E8EE;
+  width: 120px;
+  height: 300px;
+  vertical-align: top;
+  margin-top: 8px;
+  border-radius: 5px;
+  display: inline-block;
+  text-align: center;
+  background-color: #FFFFFF;
+}
+
+.userhr {
+  margin: 8px;
+}
+
+.editpost {
+  display: block;
+}
+
+.deletepost {
+  display: block;
+}
+
+.singleuserimage {
+  margin-top: 10px;
+}
+
+.singlepost {
+  display: inline-block;
+  margin-left: 10px;
+  text-align: left;
+  border: 1px solid #E2E8EE;
+  margin-top: 8px;
+  padding: 20px;
+  width: 800px;
+  background-color: #FFFFFF;
+}
+
+.userpost {
+  width: 500px;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.imagediv {
+  width: 400px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+  text-align: right;
+  margin-bottom: 20px;
+}
+
 .postimage {
-  width: 200px;
+  width: 800px;
+}
+
+.singlepostimage {
+  width: 500px;
+}
+
+.comment {
+  width: 300px;
 }
 
 .postdesc {
-
+  font-size: .9em;
+  font-color: black;
 }
 
 .post {
-  width: 500px;
+  background: #FFFFFF;
+  // width: 600px;
   text-align: left;
+  border: 1px solid #E2E8EE;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 .posts {
-  border: 1px solid red;
-  width: 600px;
+  width: 700px;
   padding: 0;
   margin: 0 auto;
 }

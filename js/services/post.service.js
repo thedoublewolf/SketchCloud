@@ -7,7 +7,7 @@ let PostService = function($http, PARSE) {
       url: url,
       headers: PARSE.CONFIG.headers,
       method: 'GET',
-      cache: true
+      cache: false
     });
   };
 
@@ -16,7 +16,7 @@ let PostService = function($http, PARSE) {
       method: 'GET',
       url: url + '/' + postId,
       headers: PARSE.CONFIG.headers,
-      cache: true
+      cache: false
     });
   };
 
@@ -37,6 +37,11 @@ let PostService = function($http, PARSE) {
 
   this.delete = function (obj) {
     return $http.delete(url + '/' + obj.objectId, PARSE.CONFIG);
+  };
+
+  this.rate = function (obj, rating) {
+    obj.rating = rating;
+    return $http.put(url + '/' + obj.objectId, obj, PARSE.CONFIG);
   };
 
 };

@@ -1,5 +1,7 @@
 import angular from 'angular';
 import 'angular-ui-router';
+import 'angular-foundation';
+import moment from 'moment';
 
 import config from './config';
 
@@ -16,7 +18,7 @@ import EditController from './controllers/edit.controller';
 import PostService from './services/post.service';
 
 angular
-  .module('app', ['ui.router'])
+  .module('app', ['ui.router', 'mm.foundation'])
   .constant('PARSE', {
     URL: 'https://api.parse.com/1/',
     CONFIG: {
